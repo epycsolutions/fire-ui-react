@@ -1,0 +1,48 @@
+{
+    "name": "@fire-ui/utils",
+    "version": "0.0.0",
+    "description": "Common utilities and types for FireUI",
+    "author": "Epyc Solutions",
+    "homepage": "Epyc Solutions",
+    "license": "MIT",
+    "sideEffects": false,
+    "main": "src/index.ts",
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/epycsolutions/fire-ui-react.git",
+        "directory": "packages/legacy/utils"
+    },
+    "bugs": {
+        "url": "https://github.com/epycsolutions/fire-ui-react/issues"
+    },
+    "scripts": {
+        "build": "tsup src --dts",
+        "dev": "npm build:fast -- --watch",
+        "clean": "rimraf dist .turbo",
+        "typecheck": "tsc --noEmit",
+        "build:fast": "tsup src",
+        "prepack": "clean-package",
+        "postpack": "clean-package restore"
+    },
+    "dependencies": {
+        "@types/lodash.mergewith": "4.6.7",
+        "css-box-model": "1.2.1",
+        "framesync": "6.1.2",
+        "lodash.mergewith": "4.6.2"
+    },
+    "devDependencies": {
+        "clean-package": "2.2.0"
+    },
+    "clean-package": "../../../clean-package.config.json",
+    "tsup": {
+        "clean": true,
+        "target": "ES2019",
+        "format": [ "cjs", "esm" ]
+    }
+}
