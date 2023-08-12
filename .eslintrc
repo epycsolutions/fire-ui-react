@@ -28,7 +28,7 @@
     ],
     "rules": {
         "@typescript-eslint/ban-ts-comment": "off",
-        "@tyoescript-eslint/no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": "off",
         "no-param-reassign": "off",
         "no-console": "off",
         "jsx-a11y/no-autofocus": "off",
