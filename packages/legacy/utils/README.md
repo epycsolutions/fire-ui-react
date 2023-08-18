@@ -1,6 +1,6 @@
-# Utilities
+# @fire-ui/utils
 
-Shared Vanilla TS/JS utilities for various FireUI components and packcages.
+Shared Vanilla TS/JS utilities for various FireUI components and packages.
 
 > This is an internal utility, not intended for public usage.
 

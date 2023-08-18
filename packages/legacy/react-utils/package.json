@@ -1,0 +1,58 @@
+{
+    "name": "@fire-ui/react-utils",
+    "version": "0.0.0",
+    "description": "React utilities and helper for FireUI",
+    "keywords": [
+        "theme",
+        "theming",
+        "ui mode",
+        "ui"
+    ],
+    "author": "Epyc Solutions",
+    "homepage": "https://github.com/epycsolutions/fire-ui-react#readme",
+    "license": "MIT",
+    "sideEffects": false,
+    "main": "src/index.ts",
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/epycsolutions/fire-ui-react.git",
+        "directory": "packages/legacy/react-utils"
+    },
+    "bugs": {
+        "url": "https://github.com/epycsolutions/fire-ui-react/issues"
+    },
+    "dependencies": {
+        "@fire-ui/utils": "workspace:*"
+    },
+    "peerDependencies": {
+        "react": ">=18"
+    },
+    "devDependencies": {
+        "react": "18.2.0",
+        "clean-package": "2.2.0"
+    },
+    "scripts": {
+        "build": "tsup src --dts",
+        "dev": "npm build:fast -- --watch",
+        "clean": "rimraf dist .turbo",
+        "typecheck": "tsc --noEmot",
+        "build:fast": "tsup src",
+        "prepack": "clean-package",
+        "postpack": "clean-package restore"
+    },
+    "clean-packcage": "../../../clean-packcage.config.json",
+    "tsup": {
+        "clean": true,
+        "target": "ES2019",
+        "format": [
+            "cjs",
+            "esm"
+        ]
+    }
+}
