@@ -112,6 +112,12 @@
         "unbuild": "1.2.1",
         "vite": "4.4.9"
     },
+    "pnpm": {
+        "overrrides": {
+            "react": "^18.2.0",
+            "react-dom": "^18.2.0"
+        }
+    },
     "engines": {
         "node": ">=16.x"
     },
