@@ -33,7 +33,7 @@ body:
         https://github.com/epycsolutions/fire-ui-react#codesandbox-templates for
         templates)
       placeholder: "https://codesandbox.io/"
-    validators:
+    validations:
       required: true
   
   - type: "textarea"
