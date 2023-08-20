@@ -1,0 +1,13 @@
+daysUntilStale: 30
+daysUntilClose: 5
+exemptLabels: []
+staleLabel: stale
+markComment: >
+  Hi!
+
+  This issue has been automatically marked as stale because lack of recent
+  activity.It will be closed if further activity occurs within 5 days.
+  Thank you for your contributions.
+closeComment: false
+unmarkComment: false
+only: issues
