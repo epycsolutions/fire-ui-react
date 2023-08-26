@@ -22,7 +22,7 @@ body:
   - type: "textarea"
     id: "justification"
     attributes:
-      label: "Proble Statement / Justification"
+      label: "Problem Statement / Justification"
       description: |
         Plase provide a valid reason(s) why this should be added to FireUI
 
