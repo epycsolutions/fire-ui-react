@@ -21,7 +21,7 @@ type MessageOptions = {
 
 export const warn = (options: MessageOptions) => {
     const { condition, message } = options
-    if(condition && isDev()) console.warn(message)
+    if (condition && isDev()) console.warn(message)
 }
 
 export function runIfFn<T, U>(
@@ -36,8 +36,10 @@ const isFunction = <T extends Function = Function>(value: any): value is T =>
 
 type Booleanish = boolean | 'true' | 'false'
 
-export const dataAttr = (condition: boolean | undefined) => (condition ? '' : undefined) as Booleanish
-export const ariaAttr = (condition: boolean | undefined) => condition ? true : undefined
+export const dataAttr = (condition: boolean | undefined) =>
+    (condition ? '' : undefined) as Booleanish
+export const ariaAttr = (condition: boolean | undefined) =>
+    condition ? true : undefined
 
 type Args<T extends Function> = T extends (...args: infer R) => any ? R : never
 

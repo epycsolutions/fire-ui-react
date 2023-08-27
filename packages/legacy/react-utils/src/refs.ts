@@ -6,9 +6,9 @@ export type ReactRef<T> =
     | React.MutableRefObject<T>
 
 export function assignRef<T = any>(ref: ReactRef<T> | undefined, value: T) {
-    if(ref == null) return
+    if (ref == null) return
 
-    if(isFunction(ref)) {
+    if (isFunction(ref)) {
         ref(value)
         return
     }
@@ -16,8 +16,8 @@ export function assignRef<T = any>(ref: ReactRef<T> | undefined, value: T) {
     try {
         // @ts-ignore
         ref.current = value
-    } catch(error) {
-        throw new Error(`Cannot assign value '${ value }' to ref '${ ref }'`)
+    } catch (error) {
+        throw new Error(`Cannot assign value '${value}' to ref '${ref}'`)
     }
 }
 

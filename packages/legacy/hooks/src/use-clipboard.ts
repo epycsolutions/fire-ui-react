@@ -8,10 +8,10 @@ export interface UseClipboardOptions {
 
 export function useClipboard(
     value: string,
-    optionsOrTimeout: number | UseClipboardOptions = { }
+    optionsOrTimeout: number | UseClipboardOptions = {},
 ) {
-    const [ hasCopied, setHasCopied ] = useState(false)
-    const [ valueState, setValueState ] = useState(value)
+    const [hasCopied, setHasCopied] = useState(false)
+    const [valueState, setValueState] = useState(value)
 
     useEffect(() => setValueState(value), [value])
 
@@ -23,25 +23,26 @@ export function useClipboard(
     const onCopy = useCallback(() => {
         const didCopy = copy(valueState, copyOptions)
         setHasCopied(didCopy)
-    }, [ valueState, copyOptions ])
+    }, [valueState, copyOptions])
 
     useEffect(() => {
         let timeoutId: number | null = null
 
-        if(hasCopied) {
+        if (hasCopied) {
             timeoutId = window.setTimeout(() => {
                 setHasCopied(false)
             }, timeout)
         }
 
         return () => {
-            if(timeoutId) window.clearTimeout(timeoutId)
+            if (timeoutId) window.clearTimeout(timeoutId)
         }
-    }, [ timeout, hasCopied ])
+    }, [timeout, hasCopied])
 
     return {
         value: valueState,
         setValue: setValueState,
-        onCopy, hasCopied
+        onCopy,
+        hasCopied,
     }
 }

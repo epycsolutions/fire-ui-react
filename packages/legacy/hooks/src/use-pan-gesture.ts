@@ -3,24 +3,24 @@ import {
     noop,
     PanEventHandler,
     PanSession,
-    PanSessionHandlers
+    PanSessionHandlers,
 } from '@fire-ui/utils'
 import { useEffect, useRef } from 'react'
 import { usePointerEvent } from './use-pointer-event'
 import { useUnmountEffect } from './use-unmount-effect'
 
 export interface UsePanGestureProps {
-    onPan?: PanEventHandler,
-    onPanStart?: PanEventHandler,
-    onPanEnd?: PanEventHandler,
-    onPanSessionStart?: PanEventHandler,
-    onPanSessionEnd?: PanEventHandler,
+    onPan?: PanEventHandler
+    onPanStart?: PanEventHandler
+    onPanEnd?: PanEventHandler
+    onPanSessionStart?: PanEventHandler
+    onPanSessionEnd?: PanEventHandler
     threshold?: number
 }
 
 export function usePanGesture(
     ref: React.RefObject<HTMLElement>,
-    props: UsePanGestureProps
+    props: UsePanGestureProps,
 ) {
     const {
         onPan,
@@ -32,7 +32,7 @@ export function usePanGesture(
     } = props
 
     const hasPanEvents = Boolean(
-        onPan || onPanStart || onPanEnd || onPanSessionStart || onPanSessionEnd
+        onPan || onPanStart || onPanEnd || onPanSessionStart || onPanSessionEnd,
     )
 
     const panSession = useRef<PanSession | null>(null)
@@ -45,7 +45,7 @@ export function usePanGesture(
         onEnd(event, info) {
             panSession.current = null
             onPanEnd?.(event, info)
-        }
+        },
     }
 
     useEffect(() => {
@@ -59,7 +59,7 @@ export function usePanGesture(
     usePointerEvent(
         () => ref.current,
         'pointerdown',
-        hasPanEvents ? onPointerDown : noop
+        hasPanEvents ? onPointerDown : noop,
     )
 
     useUnmountEffect(() => {

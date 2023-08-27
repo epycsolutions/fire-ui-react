@@ -10,6 +10,6 @@ export function useForceUpdate() {
     })
 
     return useCallback(() => {
-        if(!unloadingRef.current) setCount(count + 1)
+        if (!unloadingRef.current) setCount(count + 1)
     }, [count])
 }

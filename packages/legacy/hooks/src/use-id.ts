@@ -5,24 +5,25 @@ export function useId(idProp?: string, prefix?: string): string {
 
     return useMemo(
         () => idProp || [prefix, id].filter(Boolean).join('-'),
-        [idProp, prefix, id]
+        [idProp, prefix, id],
     )
 }
 
 export function useIds(idProp?: string, ...prefixes: string[]) {
     const id = useId(idProp)
 
-    return useMemo(
-        () => { return prefixes.map((prefix) => `${prefix}-${id}`) },
-        [id, prefixes]
-    )
+    return useMemo(() => {
+        return prefixes.map((prefix) => `${prefix}-${id}`)
+    }, [id, prefixes])
 }
 
 export function useOptionalPart<T = any>(partId: string) {
     const [id, setId] = useState<string | null>(null)
     const ref = useCallback(
-        (node: T) => { setId(node ? partId : null) },
-        [partId]
+        (node: T) => {
+            setId(node ? partId : null)
+        },
+        [partId],
     )
 
     return { ref, id, isRendered: Boolean(id) }

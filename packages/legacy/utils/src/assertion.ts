@@ -7,7 +7,9 @@ export function isNumber(value: any): value is number {
 
 export function isNotNumber(value: any) {
     return (
-        typeof value !== 'number' || Number.isNaN(value) || !Number.isFinite(value)
+        typeof value !== 'number' ||
+        Number.isNaN(value) ||
+        !Number.isFinite(value)
     )
 }
 
@@ -25,7 +27,9 @@ export function isEmptyArray(value: any) {
 }
 
 // Function assertions
-export function isFunction<T extends Function = Function>(value: any): value is T {
+export function isFunction<T extends Function = Function>(
+    value: any,
+): value is T {
     return typeof value === 'function'
 }
 
@@ -72,10 +76,10 @@ export function isCssVar(value: string): boolean {
 
 // empty assetions
 export function isEmpty(value: any): boolean {
-    if(isArray(value)) return isEmptyArray(value)
-    if(isObject(value)) return isEmptyObject(value)
+    if (isArray(value)) return isEmptyArray(value)
+    if (isObject(value)) return isEmptyObject(value)
 
-    if(value == null || value === '') return true
+    if (value == null || value === '') return true
     return false
 }
 
@@ -86,6 +90,8 @@ export function isRefObject(value: any): value is { current: any } {
     return 'current' in value
 }
 
-export function isInputEvent(value: any): value is { target: HTMLInputElement } {
+export function isInputEvent(
+    value: any,
+): value is { target: HTMLInputElement } {
     return value && isObject(value) && isObject(value.target)
 }

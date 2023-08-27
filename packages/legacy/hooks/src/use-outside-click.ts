@@ -4,7 +4,7 @@ import { useCallbackRef } from './use-callback-ref'
 
 export interface UseOutsideClickProps {
     enabled?: boolean
-    ref: React.RefObject<HTMLElement>,
+    ref: React.RefObject<HTMLElement>
     handler?: (event: Event) => void
 }
 
@@ -14,27 +14,27 @@ export function useOutsideClick(props: UseOutsideClickProps) {
 
     const stateRef = useRef({
         isPointerDown: false,
-        ignoreEmulatedMouseEvents: false
+        ignoreEmulatedMouseEvents: false,
     })
 
     const state = stateRef.current
 
     useEffect(() => {
-        if(!enabled) return
+        if (!enabled) return
 
         const onPointerDown: any = (event: PointerEvent) => {
-            if(isValidEvent(event, ref)) {
+            if (isValidEvent(event, ref)) {
                 state.isPointerDown = true
             }
         }
 
         const onMouseUp: any = (event: MouseEvent) => {
-            if(state.ignoreEmulatedMouseEvents) {
+            if (state.ignoreEmulatedMouseEvents) {
                 state.ignoreEmulatedMouseEvents = false
                 return
             }
 
-            if(state.isPointerDown && handler && isValidEvent(event, ref)) {
+            if (state.isPointerDown && handler && isValidEvent(event, ref)) {
                 state.isPointerDown = false
                 savedHandler(event)
             }
@@ -42,7 +42,7 @@ export function useOutsideClick(props: UseOutsideClickProps) {
 
         const onTouchEnd = (event: TouchEvent) => {
             state.ignoreEmulatedMouseEvents = true
-            if(handler && state.isPointerDown && isValidEvent(event, ref)) {
+            if (handler && state.isPointerDown && isValidEvent(event, ref)) {
                 state.isPointerDown = false
                 savedHandler(event)
             }
@@ -66,9 +66,9 @@ export function useOutsideClick(props: UseOutsideClickProps) {
 function isValidEvent(event: Event, ref: React.RefObject<HTMLElement>) {
     const target = event.target as HTMLElement
 
-    if(target) {
+    if (target) {
         const doc = getOwnerDocument(target)
-        if(!doc.contains(target)) return false
+        if (!doc.contains(target)) return false
     }
 
     return !ref.current?.contains(target)

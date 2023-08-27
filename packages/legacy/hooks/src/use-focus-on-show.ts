@@ -3,7 +3,7 @@ import {
     focus,
     FocusableElement,
     getAllFocusable,
-    isRefObject
+    isRefObject,
 } from '@fire-ui/utils'
 import { useCallback, useRef } from 'react'
 import { useEventListener } from './use-event-listener'
@@ -24,7 +24,7 @@ const defaultOptions: UseFocusOnShowOptions = {
 
 export function useFocusOnShow<T extends HTMLElement>(
     target: React.RefObject<T> | T,
-    options = defaultOptions
+    options = defaultOptions,
 ) {
     const { focusRef, preventScroll, shouldFocus, visible } = options
     const element = isRefObject(target) ? target.current : target
@@ -33,7 +33,7 @@ export function useFocusOnShow<T extends HTMLElement>(
     const lastVisibleRef = useRef(visible)
 
     useSafeLayoutEffect(() => {
-        if(!lastVisibleRef.current && visible) {
+        if (!lastVisibleRef.current && visible) {
             autoFocusRef.current = autoFocusValue
         }
 
@@ -41,16 +41,17 @@ export function useFocusOnShow<T extends HTMLElement>(
     }, [visible, autoFocusValue])
 
     const onFocus = useCallback(() => {
-        if(!visible || !element || !autoFocusRef.current) return
+        if (!visible || !element || !autoFocusRef.current) return
         autoFocusRef.current = false
 
-        if(contains(element, document.activeElement as HTMLElement)) return
+        if (contains(element, document.activeElement as HTMLElement)) return
 
-        if(focusRef?.current) {
+        if (focusRef?.current) {
             focus(focusRef.current, { preventScroll, nextTick: true })
         } else {
             const tabbableEls = getAllFocusable(element)
-            if(tabbableEls.length > 0) focus(tabbableEls[0], { preventScroll, nextTick: true })
+            if (tabbableEls.length > 0)
+                focus(tabbableEls[0], { preventScroll, nextTick: true })
         }
     }, [visible, preventScroll, element, focusRef])
 

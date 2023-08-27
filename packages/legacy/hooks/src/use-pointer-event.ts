@@ -1,7 +1,7 @@
 import {
     EventListenerWithPointInfo,
     getPointerEventName,
-    wrapPointerEventHandler
+    wrapPointerEventHandler,
 } from '@fire-ui/utils'
 import { EventListenerEnv, useEventListener } from './use-event-listener'
 
@@ -12,12 +12,12 @@ export function usePointerEvent(
     env: EventListenerEnv,
     eventName: string,
     handler: EventListenerWithPointInfo,
-    options?: AddEventListenerOptions
+    options?: AddEventListenerOptions,
 ) {
     return useEventListener(
         getPointerEventName(eventName),
         wrapPointerEventHandler(handler, eventName === 'pointerdown'),
         env,
-        options
+        options,
     )
 }

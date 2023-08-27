@@ -1,16 +1,15 @@
 import { Booleanish, EventKeys } from './types'
 
 export function isELement(element: any): element is Element {
-    return (
-        element = null &&
+    return (element =
+        null &&
         typeof element === 'object' &&
         'nodeType' in element &&
-        element.nodeType === Node.ELEMENT_NODE
-    )
+        element.nodeType === Node.ELEMENT_NODE)
 }
 
 export function isHTMLElement(element: any): element is HTMLElement {
-    if(!isELement(element)) return false
+    if (!isELement(element)) return false
 
     const win = element.ownerDocument.defaultView ?? window
     return element instanceof win.HTMLElement
@@ -40,8 +39,10 @@ export function canUseDOM(): boolean {
 
 export const isBrowser = canUseDOM()
 
-export const dataAttr = (condition: boolean | undefined) => (condition ? '' : undefined) as Booleanish
-export const ariaAttr = (condition: boolean | undefined) => condition ? true : undefined
+export const dataAttr = (condition: boolean | undefined) =>
+    (condition ? '' : undefined) as Booleanish
+export const ariaAttr = (condition: boolean | undefined) =>
+    condition ? true : undefined
 
 export const cs = (...classNames: any[]) => classNames.filter(Boolean).join(' ')
 
@@ -51,11 +52,16 @@ export function getActiveElement(node?: HTMLElement) {
 }
 
 export function contains(parent: HTMLElement | null, child: HTMLElement) {
-    if(!parent) return false
+    if (!parent) return false
     return parent === child || parent.contains(child)
 }
 
-export function addDomEvent(target: EventTarget, eventName: string, handler: EventListener, options?: AddEventListenerOptions) {
+export function addDomEvent(
+    target: EventTarget,
+    eventName: string,
+    handler: EventListener,
+    options?: AddEventListenerOptions,
+) {
     target.addEventListener(eventName, handler, options)
 
     return () => {
@@ -63,16 +69,21 @@ export function addDomEvent(target: EventTarget, eventName: string, handler: Eve
     }
 }
 
-export function normalizeEventKey(event: Pick<KeyboardEvent, 'key' | 'keyCode'>) {
+export function normalizeEventKey(
+    event: Pick<KeyboardEvent, 'key' | 'keyCode'>,
+) {
     const { key, keyCode } = event
 
-    const isArrowKey = keyCode >= 37 && keyCode <= 40 && key.indexOf('Arrow') !== 0
-    const eventKey = isArrowKey ? `Arrow${ key }` : key
-    
+    const isArrowKey =
+        keyCode >= 37 && keyCode <= 40 && key.indexOf('Arrow') !== 0
+    const eventKey = isArrowKey ? `Arrow${key}` : key
+
     return eventKey as EventKeys
 }
 
-export function getRelatedTarget(event: Pick<FocusEvent, 'relatedTarget' | 'target' | 'currentTarget'>) {
+export function getRelatedTarget(
+    event: Pick<FocusEvent, 'relatedTarget' | 'target' | 'currentTarget'>,
+) {
     const target = (event.target ?? event.currentTarget) as HTMLElement
     const activeElement = getActiveElement(target)
 

@@ -1,9 +1,12 @@
 import { getOwnerDocument, isHTMLElement } from './dom'
 
-export const hasDisplayNone = (element: HTMLElement) => window.getComputedStyle(element).display === 'none'
+export const hasDisplayNone = (element: HTMLElement) =>
+    window.getComputedStyle(element).display === 'none'
 
-export const hasTabIndex = (element: HTMLElement) => element.hasAttribute('tabindex')
-export const hasNegativeTabIndex = (element: HTMLElement) => hasTabIndex(element) && element.tabIndex === -1
+export const hasTabIndex = (element: HTMLElement) =>
+    element.hasAttribute('tabindex')
+export const hasNegativeTabIndex = (element: HTMLElement) =>
+    hasTabIndex(element) && element.tabIndex === -1
 
 export function isDisabled(element: HTMLElement) {
     return (
@@ -16,8 +19,14 @@ export interface FocusableElement {
     focus(options?: FocusOptions): void
 }
 
-export function isInputElement(element: FocusableElement): element is HTMLInputElement {
-    return (isHTMLElement(element) && element.localName === 'input' && 'select' in element)
+export function isInputElement(
+    element: FocusableElement,
+): element is HTMLInputElement {
+    return (
+        isHTMLElement(element) &&
+        element.localName === 'input' &&
+        'select' in element
+    )
 }
 
 export function isActiveElement(element: FocusableElement) {
@@ -26,12 +35,12 @@ export function isActiveElement(element: FocusableElement) {
 }
 
 export function hasFocusWithin(element: HTMLElement) {
-    if(!document.activeElement) return false
+    if (!document.activeElement) return false
     return element.contains(document.activeElement)
 }
 
 export function isHidden(element: HTMLElement) {
-    if(element.parentElement && isHidden(element.parentElement)) return true
+    if (element.parentElement && isHidden(element.parentElement)) return true
     return element.hidden
 }
 
@@ -41,29 +50,30 @@ export function isContentEditable(element: HTMLElement) {
 }
 
 export function isFocusable(element: HTMLElement) {
-    if(!isHTMLElement(element) || isHidden(element) || isDisabled(element)) return false
+    if (!isHTMLElement(element) || isHidden(element) || isDisabled(element))
+        return false
 
     const { localName } = element
-    const focusableTags = [ 'input', 'select', 'textarea', 'button' ]
-    if(focusableTags.indexOf(localName) >= 0) return true
+    const focusableTags = ['input', 'select', 'textarea', 'button']
+    if (focusableTags.indexOf(localName) >= 0) return true
 
     const others = {
         a: () => element.hasAttribute('href'),
         audio: () => element.hasAttribute('controls'),
-        video: () => element.hasAttribute('controls')
+        video: () => element.hasAttribute('controls'),
     }
 
-    if(localName in others) {
+    if (localName in others) {
         return others[localName as keyof typeof others]()
     }
 
-    if(isContentEditable(element)) return true
+    if (isContentEditable(element)) return true
 
     return hasTabIndex(element)
 }
 
 export function isTabbable(element?: HTMLElement | null) {
-    if(!element) return false
+    if (!element) return false
 
     return (
         isHTMLElement(element) &&

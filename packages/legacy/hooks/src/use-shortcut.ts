@@ -10,14 +10,14 @@ export interface UseShortcutProps {
     preventDefault?: (event: React.KeyboardEvent) => boolean
 }
 
-export function useShortcut(props: UseShortcutProps = { }) {
+export function useShortcut(props: UseShortcutProps = {}) {
     const { timeout = 300, preventDefault = () => true } = props
 
     const [keys, setKeys] = useState<string[]>([])
     const timeoutRef = useRef<any>()
 
     const flush = () => {
-        if(timeoutRef.current) {
+        if (timeoutRef.current) {
             clearTimeout(timeoutRef.current)
             timeoutRef.current = null
         }
@@ -38,7 +38,7 @@ export function useShortcut(props: UseShortcutProps = { }) {
 
     function onKeyDown(fn: Callback) {
         return (event: React.KeyboardEvent) => {
-            if(event.key === 'Backspace') {
+            if (event.key === 'Backspace') {
                 const keysCopy = [...keys]
                 keysCopy.pop()
                 setKeys(keysCopy)
@@ -46,10 +46,10 @@ export function useShortcut(props: UseShortcutProps = { }) {
                 return
             }
 
-            if(isPrintableCharacter(event)) {
+            if (isPrintableCharacter(event)) {
                 const keysCopy = keys.concat(event.key)
 
-                if(preventDefault(event)) {
+                if (preventDefault(event)) {
                     event.preventDefault()
                     event.stopPropagation()
                 }

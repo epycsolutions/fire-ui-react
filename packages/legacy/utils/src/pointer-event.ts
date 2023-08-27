@@ -7,7 +7,10 @@ type PointType = 'page' | 'client'
 export function isMouseEvent(event: AnyPointerEvent): event is MouseEvent {
     const win = getEventWindow(event)
 
-    if(typeof win.PointerEvent !== 'undefined' && event instanceof win.PointerEvent) {
+    if (
+        typeof win.PointerEvent !== 'undefined' &&
+        event instanceof win.PointerEvent
+    ) {
         return !!(event.pointerType === 'mouse')
     }
 
@@ -28,19 +31,27 @@ export interface PointerEventInfo {
     point: Point
 }
 
-export type EventHandler = (event: AnyPointerEvent, info: PointerEventInfo) => void
+export type EventHandler = (
+    event: AnyPointerEvent,
+    info: PointerEventInfo,
+) => void
 
 function filterPrimaryPointer(eventHandler: EventListener): EventListener {
     return (event: Event) => {
         const win = getEventWindow(event)
         const isMouseEvent = event instanceof win.MouseEvent
-        const isPrimaryPointer = !isMouseEvent ||(isMouseEvent && (event as MouseEvent).button === 0)
+        const isPrimaryPointer =
+            !isMouseEvent ||
+            (isMouseEvent && (event as MouseEvent).button === 0)
 
-        if(isPrimaryPointer) eventHandler(event)
+        if (isPrimaryPointer) eventHandler(event)
     }
 }
 
-export type EventListenerWithPointInfo = (event: AnyPointerEvent, info: PointerEventInfo) => void
+export type EventListenerWithPointInfo = (
+    event: AnyPointerEvent,
+    info: PointerEventInfo,
+) => void
 
 const defaultPagePoint = { pageX: 0, pageY: 0 }
 
@@ -49,23 +60,29 @@ function pointFromTouch(event: TouchEvent, pointType: PointType = 'page') {
     const point = primaryTouch || defaultPagePoint
 
     return {
-        x: point[`${ pointType }X`],
-        y: point[`${ pointType }Y`]
+        x: point[`${pointType}X`],
+        y: point[`${pointType}Y`],
     }
 }
 
-function pointFromMouse(point: MouseEvent | PointerEvent, pointType: PointType = 'page') {
+function pointFromMouse(
+    point: MouseEvent | PointerEvent,
+    pointType: PointType = 'page',
+) {
     return {
-        x: point[`${ pointType }X`],
-        y: point[`${ pointType }Y`]
+        x: point[`${pointType}X`],
+        y: point[`${pointType}Y`],
     }
 }
 
-export function extractEventInfo(event: AnyPointerEvent, pointType: PointType = 'page') {
+export function extractEventInfo(
+    event: AnyPointerEvent,
+    pointType: PointType = 'page',
+) {
     return {
         point: isTouchEvent(event)
             ? pointFromTouch(event, pointType)
-            : pointFromMouse(event, pointType)
+            : pointFromMouse(event, pointType),
     }
 }
 
@@ -73,9 +90,15 @@ export function getViewportPointFromEvent(event: AnyPointerEvent) {
     return extractEventInfo(event, 'client')
 }
 
-export const wrapPointerEventHandler = (handler: EventListenerWithPointInfo, shouldFilterPrimaryPointer = false): EventListener => {
-    const listener: EventListener = (event: any) => handler(event, extractEventInfo(event))
-    return shouldFilterPrimaryPointer ? filterPrimaryPointer(listener) : listener
+export const wrapPointerEventHandler = (
+    handler: EventListenerWithPointInfo,
+    shouldFilterPrimaryPointer = false,
+): EventListener => {
+    const listener: EventListener = (event: any) =>
+        handler(event, extractEventInfo(event))
+    return shouldFilterPrimaryPointer
+        ? filterPrimaryPointer(listener)
+        : listener
 }
 
 const supportsPointerEvents = () => isBrowser && window.onpointerdown === null
@@ -101,26 +124,36 @@ const mouseEventNames: PointerNameMap = {
     pointerover: 'mouseover',
     pointerout: 'mouseout',
     pointerenter: 'mouseenter',
-    pointerleave: 'mouseleave'
+    pointerleave: 'mouseleave',
 }
 
 const touchEventNames: PointerNameMap = {
     pointerdown: 'touchstart',
     pointermove: 'touchmove',
     pointerup: 'touchend',
-    pointercancel: 'touchcancel'
+    pointercancel: 'touchcancel',
 }
 
 export function getPointerEventName(name: string): string {
-    if(supportsPointerEvents()) return name
-    if(supportsTouchEvents()) return (touchEventNames as any)[name]
-    if(supportsMouseEvents()) return (mouseEventNames as any)[name]
+    if (supportsPointerEvents()) return name
+    if (supportsTouchEvents()) return (touchEventNames as any)[name]
+    if (supportsMouseEvents()) return (mouseEventNames as any)[name]
 
     return name
 }
 
-export function addPointerEvent(target: EventTarget, eventName: string, handler: EventListenerWithPointInfo, options?: AddEventListenerOptions) {
-    return addDomEvent(target, getPointerEventName(eventName), wrapPointerEventHandler(handler, eventName === 'pointerdown'), options)
+export function addPointerEvent(
+    target: EventTarget,
+    eventName: string,
+    handler: EventListenerWithPointInfo,
+    options?: AddEventListenerOptions,
+) {
+    return addDomEvent(
+        target,
+        getPointerEventName(eventName),
+        wrapPointerEventHandler(handler, eventName === 'pointerdown'),
+        options,
+    )
 }
 
 export function isMultiTouchEvent(event: AnyPointerEvent) {

@@ -2,7 +2,7 @@ import {
     PointerEventInfo,
     getPointerEventName,
     wrapPointerEventHandler,
-    EventListenerWithPointInfo
+    EventListenerWithPointInfo,
 } from '@fire-ui/utils'
 import { useCallback, useEffect, useRef } from 'react'
 
@@ -37,34 +37,44 @@ export function useEventListenerMap(): EventListeners {
     const listeners = useRef(new Map())
     const currentListeners = listeners.current
 
-    const add = useCallback((element: any, type: any, listener: any, options: any) => {
-        const pointerEventListener = wrapPointerEventHandler(
-            listener,
-            type === 'pointerdown'
-        )
+    const add = useCallback(
+        (element: any, type: any, listener: any, options: any) => {
+            const pointerEventListener = wrapPointerEventHandler(
+                listener,
+                type === 'pointerdown',
+            )
 
-        listeners.current.set(listener, {
-            __listener: pointerEventListener,
-            type: getPointerEventName(type),
-            element,
-            options
-        })
+            listeners.current.set(listener, {
+                __listener: pointerEventListener,
+                type: getPointerEventName(type),
+                element,
+                options,
+            })
 
-        element.addEventListener(type, pointerEventListener, options)
-    }, [])
+            element.addEventListener(type, pointerEventListener, options)
+        },
+        [],
+    )
 
-    const remove = useCallback((element: any, type: any, listener: any, options: any) => {
-        const { __listener: pointerEventListener } = listeners.current.get(listener)
+    const remove = useCallback(
+        (element: any, type: any, listener: any, options: any) => {
+            const { __listener: pointerEventListener } =
+                listeners.current.get(listener)
 
-        element.removeEventListener(type, pointerEventListener, options)
-        listeners.current.delete(pointerEventListener)
-    }, [])
+            element.removeEventListener(type, pointerEventListener, options)
+            listeners.current.delete(pointerEventListener)
+        },
+        [],
+    )
 
-    useEffect(() => () => {
-        currentListeners.forEach((value, key) => {
-            remove(value.element, value.type, key, value.options)
-        })
-    }, [remove, currentListeners])
+    useEffect(
+        () => () => {
+            currentListeners.forEach((value, key) => {
+                remove(value.element, value.type, key, value.options)
+            })
+        },
+        [remove, currentListeners],
+    )
 
     return { add, remove }
 }

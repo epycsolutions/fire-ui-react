@@ -7,19 +7,17 @@ interface DetermineLazyBehaviorOptions {
     lazyBehavior?: LazyBehavior
 }
 
-
-
 export function determineLazyBehavior(options: DetermineLazyBehaviorOptions) {
     const {
         hasBeenSelected,
         isLazy,
         isSelected,
-        lazyBehavior = 'unmount'
+        lazyBehavior = 'unmount',
     } = options
 
-    if(!isLazy) return true
-    if(isSelected) return true
-    if(lazyBehavior === 'keepMounted' && hasBeenSelected) return true
+    if (!isLazy) return true
+    if (isSelected) return true
+    if (lazyBehavior === 'keepMounted' && hasBeenSelected) return true
 
     return false
 }

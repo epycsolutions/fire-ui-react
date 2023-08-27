@@ -17,7 +17,7 @@ export function useEventListener<K extends keyof DocumentEventMap>(
     useEffect(() => {
         const node = runIfFn(env) ?? document
 
-        if(!handler) return
+        if (!handler) return
 
         node.addEventListener(event, listener, options)
         return () => {

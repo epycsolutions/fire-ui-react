@@ -11,15 +11,17 @@ function analyzeCSSValue(value: number | string) {
 }
 
 export function px(value: number | string | null): string | null {
-    if(value == null) return value as string | null
+    if (value == null) return value as string | null
 
     const { unitless } = analyzeCSSValue(value)
-    return unitless || isNumber(value) ? `${ value }px` : value
+    return unitless || isNumber(value) ? `${value}px` : value
 }
 
-const sortByBreakpointValue = (a: any[], b: any[]) => parseInt(a[1], 10) > parseInt(b[1], 10) ? 1 : -1
+const sortByBreakpointValue = (a: any[], b: any[]) =>
+    parseInt(a[1], 10) > parseInt(b[1], 10) ? 1 : -1
 
-const sortBreakPoints = (breakpoints: Dict): Dict => fromEntries(Object.entries(breakpoints).sort(sortByBreakpointValue))
+const sortBreakPoints = (breakpoints: Dict): Dict =>
+    fromEntries(Object.entries(breakpoints).sort(sortByBreakpointValue))
 
 function normalize(breakpoints: Dict) {
     const sorted = sortBreakPoints(breakpoints)
@@ -32,35 +34,33 @@ function keys(breakpoints: Dict) {
 }
 
 function subtract(value: string) {
-    if(!value) return value
+    if (!value) return value
     value = px(value) ?? value
-    const factor = value.endsWith('px')
-        ? -0.02
-        : -0.01
+    const factor = value.endsWith('px') ? -0.02 : -0.01
 
     return isNumber(value)
-        ? `${  value + factor }`
-        : value.replace(/(\d+\.?\d*)/u, (m) => `${ parseFloat(m) + factor }`)
+        ? `${value + factor}`
+        : value.replace(/(\d+\.?\d*)/u, (m) => `${parseFloat(m) + factor}`)
 }
 
 export function toMediaQueryString(min: string | null, max?: string) {
-    const query = [ '@media screen' ]
+    const query = ['@media screen']
 
-    if(min) query.push('and', `(min-width: ${ px(min) })`)
-    if(max) query.push('and', `(max-width: ${ px(max) })`)
+    if (min) query.push('and', `(min-width: ${px(min)})`)
+    if (max) query.push('and', `(max-width: ${px(max)})`)
 
     return query.join(' ')
 }
 
 export function analyzeBreakpoints(breakpoints: Dict) {
-    if(!breakpoints) return null
+    if (!breakpoints) return null
     breakpoints.base = breakpoints.base ?? '0px'
 
     const normalized = normalize(breakpoints)
     const queries = Object.entries(breakpoints)
         .sort(sortByBreakpointValue)
-        .map(([ breakpoint, minW ], index, entry) => {
-            let [, maxW] = entry[index + 1] ?? [ ]
+        .map(([breakpoint, minW], index, entry) => {
+            let [, maxW] = entry[index + 1] ?? []
             maxW = parseFloat(maxW) > 0 ? subtract(maxW) : undefined
 
             return {
@@ -70,7 +70,7 @@ export function analyzeBreakpoints(breakpoints: Dict) {
                 maxW,
                 maxWQuery: toMediaQueryString(null, maxW),
                 minWQuery: toMediaQueryString(minW),
-                minMaxQuery: toMediaQueryString(minW, maxW)
+                minMaxQuery: toMediaQueryString(minW, maxW),
             }
         })
 
@@ -89,26 +89,30 @@ export function analyzeBreakpoints(breakpoints: Dict) {
         details: queries,
         media: [
             null,
-            ...normalized.map((minW) => toMediaQueryString(minW)).slice(1)
+            ...normalized.map((minW) => toMediaQueryString(minW)).slice(1),
         ],
         toArrayValue(test: Dict) {
-            if(!isObject(test)) throw new Error('toArrayValue: value must be an object')
+            if (!isObject(test))
+                throw new Error('toArrayValue: value must be an object')
 
-            const result = _keysArr.map((breakpoint) => test[breakpoint] ?? null)
-            while(getLastItem(result) === null) result.pop()
+            const result = _keysArr.map(
+                (breakpoint) => test[breakpoint] ?? null,
+            )
+            while (getLastItem(result) === null) result.pop()
 
             return result
         },
         toObjectValue(test: any[]) {
-            if(!Array.isArray(test)) throw new Error('toObjectValue: value must be an key')
+            if (!Array.isArray(test))
+                throw new Error('toObjectValue: value must be an key')
 
             return test.reduce((acc, value, index) => {
                 const key = _keysArr[index]
-                if(key != null && value != null) acc[key] = value
+                if (key != null && value != null) acc[key] = value
 
                 return acc
-            }, { } as Dict)
-        }
+            }, {} as Dict)
+        },
     }
 }
 

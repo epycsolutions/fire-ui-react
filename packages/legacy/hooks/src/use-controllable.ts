@@ -6,7 +6,7 @@ export function useControllableProp<T>(prop: T | undefined, state: T) {
     const isControlled = prop !== undefined
     const value = isControlled && typeof prop !== 'undefined' ? prop : state
 
-    return [ isControlled, value ] as const
+    return [isControlled, value] as const
 }
 
 export interface UseControllableStateProp<T> {
@@ -21,13 +21,13 @@ export function useControllableState<T>(props: UseControllableStateProp<T>) {
         value: valueProp,
         defaultValue,
         onChange,
-        shouldUpdate = (prev, next) => prev !== next
+        shouldUpdate = (prev, next) => prev !== next,
     } = props
 
     const onChangeProp = useCallbackRef(onChange)
     const shouldUpdateProp = useCallbackRef(shouldUpdate)
 
-    const [ valueState, setValue ] = useState(defaultValue as T)
+    const [valueState, setValue] = useState(defaultValue as T)
 
     const isControlled = valueProp !== undefined
     const value = isControlled ? (valueProp as T) : valueState
@@ -36,11 +36,12 @@ export function useControllableState<T>(props: UseControllableStateProp<T>) {
         (next: React.SetStateAction<T>) => {
             const nextValue = runIfFn(next, value)
 
-            if(!shouldUpdateProp(value, nextValue)) return
-            if(!isControlled) setValue(nextValue)
+            if (!shouldUpdateProp(value, nextValue)) return
+            if (!isControlled) setValue(nextValue)
 
             onChangeProp(nextValue)
-        }, [ isControlled, onChangeProp, value, shouldUpdateProp ]
+        },
+        [isControlled, onChangeProp, value, shouldUpdateProp],
     )
 
     return [value, updateValue] as [T, React.Dispatch<React.SetStateAction<T>>]

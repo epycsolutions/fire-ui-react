@@ -15,18 +15,23 @@ const focusableElementList = [
     'audio[controls]',
     'video[controls]',
     '*[tabindex]:not([aria-disabled])',
-    '*[contenteditable]'
+    '*[contenteditable]',
 ]
 
 const focusableElementSelector = focusableElementList.join()
 
-const isVisible = (element: HTMLElement) => element.offsetWidth > 0 && element.offsetHeight > 0
+const isVisible = (element: HTMLElement) =>
+    element.offsetWidth > 0 && element.offsetHeight > 0
 
 export function getAllFocusable<T extends HTMLElement>(container: T) {
-    const focusableElements = Array.from(container.querySelectorAll<T>(focusableElementSelector))
+    const focusableElements = Array.from(
+        container.querySelectorAll<T>(focusableElementSelector),
+    )
     focusableElements.unshift(container)
 
-    return focusableElements.filter((element) => isFocusable(element) && isVisible(element))
+    return focusableElements.filter(
+        (element) => isFocusable(element) && isVisible(element),
+    )
 }
 
 export function getFirstFocusable<T extends HTMLElement>(container: T) {
@@ -34,27 +39,41 @@ export function getFirstFocusable<T extends HTMLElement>(container: T) {
     return allFocusable.length ? allFocusable[0] : null
 }
 
-export function getAllTabbable<T extends HTMLElement>(container: T, fallbackToFocusable?: boolean) {
-    const allFocusable = Array.from(container.querySelectorAll<T>(focusableElementSelector))
+export function getAllTabbable<T extends HTMLElement>(
+    container: T,
+    fallbackToFocusable?: boolean,
+) {
+    const allFocusable = Array.from(
+        container.querySelectorAll<T>(focusableElementSelector),
+    )
     const allTabbable = allFocusable.filter(isTabbable)
 
-    if(isTabbable(container)) allTabbable.unshift(container)
-    if(!allTabbable.length && fallbackToFocusable) return allFocusable
+    if (isTabbable(container)) allTabbable.unshift(container)
+    if (!allTabbable.length && fallbackToFocusable) return allFocusable
 
     return allTabbable
 }
 
-export function getFirstTabbableIn<T extends HTMLElement>(container: T, fallbackToFocusable?: boolean): T | null {
+export function getFirstTabbableIn<T extends HTMLElement>(
+    container: T,
+    fallbackToFocusable?: boolean,
+): T | null {
     const [first] = getAllTabbable(container, fallbackToFocusable)
     return first || null
 }
 
-export function getLastTabbableIn<T extends HTMLElement>(container: T, fallbackToFocusable?: boolean): T | null {
+export function getLastTabbableIn<T extends HTMLElement>(
+    container: T,
+    fallbackToFocusable?: boolean,
+): T | null {
     const allTabbable = getAllTabbable(container, fallbackToFocusable)
     return allTabbable[allTabbable.length - 1] || null
 }
 
-export function getNextTabbable<T extends HTMLElement>(container: T, fallbackToFocusable?: boolean): T | null {
+export function getNextTabbable<T extends HTMLElement>(
+    container: T,
+    fallbackToFocusable?: boolean,
+): T | null {
     const allFocusable = getAllFocusable(container)
     const index = allFocusable.indexOf(document.activeElement as T)
     const slice = allFocusable.slice(index + 1)
@@ -66,7 +85,10 @@ export function getNextTabbable<T extends HTMLElement>(container: T, fallbackToF
     )
 }
 
-export function getPreviousTabbable<T extends HTMLElement>(container: T, fallbackToFocusable?: boolean): T | null {
+export function getPreviousTabbable<T extends HTMLElement>(
+    container: T,
+    fallbackToFocusable?: boolean,
+): T | null {
     const allFocusable = getAllFocusable(container).reverse()
     const index = allFocusable.indexOf(document.activeElement as T)
     const slice = allFocusable.slice(index + 1)
@@ -78,28 +100,36 @@ export function getPreviousTabbable<T extends HTMLElement>(container: T, fallbac
     )
 }
 
-export function focusNextTabbable<T extends HTMLElement>(container: T, fallbackToFocusable?: boolean) {
+export function focusNextTabbable<T extends HTMLElement>(
+    container: T,
+    fallbackToFocusable?: boolean,
+) {
     const nextTabbable = getNextTabbable(container, fallbackToFocusable)
-    if(nextTabbable && isHTMLElement(nextTabbable)) nextTabbable.focus()
+    if (nextTabbable && isHTMLElement(nextTabbable)) nextTabbable.focus()
 }
 
-export function focusPreviousTabbable<T extends HTMLElement>(container: T, fallbackToFocusable?: boolean) {
+export function focusPreviousTabbable<T extends HTMLElement>(
+    container: T,
+    fallbackToFocusable?: boolean,
+) {
     const previousTabbable = getPreviousTabbable(container, fallbackToFocusable)
-    if(previousTabbable && isHTMLElement(previousTabbable)) previousTabbable.focus()
+    if (previousTabbable && isHTMLElement(previousTabbable))
+        previousTabbable.focus()
 }
 
 function matches(element: Element, selectors: string): boolean {
-    if('matches' in element) return element.matches(selectors)
-    if('msMatchesSelector' in element) return (element as any).msMatchesSelector(selectors)
+    if ('matches' in element) return element.matches(selectors)
+    if ('msMatchesSelector' in element)
+        return (element as any).msMatchesSelector(selectors)
 
     return (element as any).webkitMatchesSelector(selectors)
 }
 
 export function closest<T extends HTMLElement>(element: T, selectors: string) {
-    if('closest' in element) return element.closest(selectors)
-    
+    if ('closest' in element) return element.closest(selectors)
+
     do {
-        if(matches(element, selectors)) return element
+        if (matches(element, selectors)) return element
         element = (element.parentElement || element.parentNode) as any
     } while (element !== null && element.nodeType === 1)
 

@@ -8,10 +8,10 @@ export function useInterval(callback: () => void, delay: number | null) {
         let intervalId: number | null = null
         const tick = () => fn()
 
-        if(delay !== null) intervalId = window.setInterval(tick, delay)
+        if (delay !== null) intervalId = window.setInterval(tick, delay)
 
         return () => {
-            if(intervalId) window.clearInterval(intervalId)
+            if (intervalId) window.clearInterval(intervalId)
         }
     }, [delay, fn])
 }

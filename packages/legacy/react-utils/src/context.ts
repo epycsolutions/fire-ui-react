@@ -1,6 +1,6 @@
 import React, {
     createContext as createReactContext,
-    useContext as useReactContext
+    useContext as useReactContext,
 } from 'react'
 
 export interface CreateContextOptions {
@@ -12,15 +12,14 @@ export interface CreateContextOptions {
 export type CreateContextReturn<T> = [
     React.Provider<T>,
     () => T,
-    React.Context<T>
+    React.Context<T>,
 ]
 
-
-export function createContext<ContextType>(options: CreateContextOptions = { }) {
+export function createContext<ContextType>(options: CreateContextOptions = {}) {
     const {
         strict = true,
         errorMessage = 'useContext `context` is undefined. Seems you forgot to wrap component within the Provider',
-        name
+        name,
     } = options
 
     const Context = createReactContext<ContextType | undefined>(undefined)
@@ -30,7 +29,7 @@ export function createContext<ContextType>(options: CreateContextOptions = { }) 
     function useContext() {
         const context = useReactContext(Context)
 
-        if(!context && strict) {
+        if (!context && strict) {
             const error = new Error(errorMessage)
             error.name = 'ContextError'
 
@@ -44,6 +43,6 @@ export function createContext<ContextType>(options: CreateContextOptions = { }) 
     return [
         Context.Provider,
         useContext,
-        Context
+        Context,
     ] as CreateContextReturn<ContextType>
 }

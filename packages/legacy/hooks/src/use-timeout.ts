@@ -3,12 +3,12 @@ import { useCallbackRef } from './use-callback-ref'
 
 export function useTimoeut(
     callback: (...args: any[]) => void,
-    delay: number | null
+    delay: number | null,
 ) {
     const fn = useCallbackRef(callback)
 
     useEffect(() => {
-        if(delay == null) return undefined
+        if (delay == null) return undefined
 
         let timeoutId: number | null = null
 
@@ -17,7 +17,7 @@ export function useTimoeut(
         }, delay)
 
         return () => {
-            if(timeoutId) window.clearTimeout(timeoutId)
+            if (timeoutId) window.clearTimeout(timeoutId)
         }
     }, [delay, fn])
 }

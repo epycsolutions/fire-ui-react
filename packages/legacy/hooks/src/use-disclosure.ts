@@ -28,12 +28,12 @@ export function useDisclosure(props: UseDisclosureProps = {}) {
     const id = useId(idProp, 'disclosure')
 
     const onClose = useCallback(() => {
-        if(!isControlled) setIsOpen(false)
+        if (!isControlled) setIsOpen(false)
         onClosePropCallbackRef?.()
     }, [isControlled, onClosePropCallbackRef])
 
     const onOpen = useCallback(() => {
-        if(!isControlled) setIsOpen(true)
+        if (!isControlled) setIsOpen(true)
         onOpenPropCallbackRef?.()
     }, [isControlled, onOpenPropCallbackRef])
 
@@ -52,13 +52,13 @@ export function useDisclosure(props: UseDisclosureProps = {}) {
             ...props,
             'aria-expanded': isOpen,
             'aria-controls': id,
-            onClick: callAllHandlers(props.onClick, onToggle)
+            onClick: callAllHandlers(props.onClick, onToggle),
         }),
         getDisclosureProps: (props: any = {}) => ({
             ...props,
             hidden: !isOpen,
             id,
-        })
+        }),
     }
 }
 

@@ -18,12 +18,12 @@ export function toPrecision(value: number, precision?: number) {
 }
 
 export function countDecimalPlaces(value: number) {
-    if(!Number.isFinite(value)) return 0
+    if (!Number.isFinite(value)) return 0
 
     let e = 1
     let p = 0
 
-    while(Math.round(value * e) / e !== value) {
+    while (Math.round(value * e) / e !== value) {
         e *= 10
         p += 1
     }
@@ -47,11 +47,11 @@ export function roundValueToStep(value: number, from: number, step: number) {
 }
 
 export function clampValue(value: number, min: number, max: number) {
-    if(value == null) return value
+    if (value == null) return value
 
     warn({
         condition: max < min,
-        message: 'clamp: max cannot be less than min'
+        message: 'clamp: max cannot be less than min',
     })
 
     return Math.min(Math.max(value, min), max)

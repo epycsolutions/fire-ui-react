@@ -9,7 +9,7 @@ import {
     isMouseEvent,
     isMultiTouchEvent,
     Point,
-    PointerEventInfo
+    PointerEventInfo,
 } from './pointer-event'
 
 export interface PanEventInfo {
@@ -19,7 +19,10 @@ export interface PanEventInfo {
     velocity: Point
 }
 
-export type PanEventHandler = (event: AnyPointerEvent, info: PanEventInfo) => void
+export type PanEventHandler = (
+    event: AnyPointerEvent,
+    info: PanEventInfo,
+) => void
 
 interface TimestampedPoint extends Point {
     timestamp: number
@@ -41,26 +44,30 @@ export type PanSessionOptions = {
 }
 
 export class PanSession {
-    private history: PanSessionHistory = [ ]
+    private history: PanSessionHistory = []
 
     private startEvent: AnyPointerEvent | null = null
     private lastEvent: AnyPointerEvent | null = null
 
     private lastEventInfo: PointerEventInfo | null = null
 
-    private handlers: Partial<PanSessionHandlers> = { }
+    private handlers: Partial<PanSessionHandlers> = {}
     private removeListeners: Function = noop
 
     private threshold = 3
     private win: typeof globalThis
 
-    constructor(event: AnyPointerEvent, handlers: Partial<PanSessionHandlers>, threshold?: number) {
+    constructor(
+        event: AnyPointerEvent,
+        handlers: Partial<PanSessionHandlers>,
+        threshold?: number,
+    ) {
         this.win = getEventWindow(event)
 
-        if(isMultiTouchEvent(event)) return
+        if (isMultiTouchEvent(event)) return
 
         this.handlers = handlers
-        if(threshold) this.threshold = threshold
+        if (threshold) this.threshold = threshold
 
         event.stopPropagation()
         event.preventDefault()
@@ -75,26 +82,27 @@ export class PanSession {
         this.removeListeners = pipe(
             addPointerEvent(this.win, 'pointermove', this.onPointerMove),
             addPointerEvent(this.win, 'pointerup', this.onPointerUp),
-            addPointerEvent(this.win, 'pointerancel', this.onPointerUp)
+            addPointerEvent(this.win, 'pointerancel', this.onPointerUp),
         )
     }
 
     private updatePoint = () => {
-        if(!(this.lastEvent && this.lastEventInfo)) return
+        if (!(this.lastEvent && this.lastEventInfo)) return
 
         const info = getPanInfo(this.lastEventInfo, this.history)
         const isPanStarted = this.startEvent !== null
 
-        const isDistancePastThreshold = distance(info.offset, { x: 0, y: 0 }) >= this.threshold
+        const isDistancePastThreshold =
+            distance(info.offset, { x: 0, y: 0 }) >= this.threshold
 
-        if(!isPanStarted && !isDistancePastThreshold) return
+        if (!isPanStarted && !isDistancePastThreshold) return
 
         const { timestamp } = getFrameData()
         this.history.push({ ...info.point, timestamp })
 
         const { onStart, onMove } = this.handlers
 
-        if(!isPanStarted) {
+        if (!isPanStarted) {
             onStart?.(this.lastEvent, info)
             this.startEvent = this.lastEvent
         }
@@ -102,11 +110,14 @@ export class PanSession {
         onMove?.(this.lastEvent, info)
     }
 
-    private onPointerMove = (event: AnyPointerEvent, info: PointerEventInfo) => {
+    private onPointerMove = (
+        event: AnyPointerEvent,
+        info: PointerEventInfo,
+    ) => {
         this.lastEvent = event
         this.lastEventInfo = info
 
-        if(isMouseEvent(event) && event.buttons === 0) {
+        if (isMouseEvent(event) && event.buttons === 0) {
             this.onPointerUp(event, info)
             return
         }
@@ -121,7 +132,7 @@ export class PanSession {
         onSessionEnd?.(event, panInfo)
         this.end()
 
-        if(!onEnd || !this.startEvent) return
+        if (!onEnd || !this.startEvent) return
 
         onEnd?.(event, panInfo)
     }
@@ -153,7 +164,7 @@ function getPanInfo(info: PointerEventInfo, history: PanSessionHistory) {
         point: info.point,
         delta: subtractPoint(info.point, lastPanPoint(history)),
         offset: subtractPoint(info.point, startPanPoint(history)),
-        velocity: getVelocity(history, 0.1)
+        velocity: getVelocity(history, 0.1),
     }
 }
 
@@ -164,30 +175,34 @@ function lastDevicePoint(history: TimestampedPoint[]): TimestampedPoint {
 const toMilliseconds = (seconds: number) => seconds * 1000
 
 function getVelocity(history: TimestampedPoint[], timeDelta: number): Point {
-    if(history.length < 2) return { x: 0, y: 0 }
-    
+    if (history.length < 2) return { x: 0, y: 0 }
+
     let i = history.length - 1
     let timestampedPoint: TimestampedPoint | null = null
     const lastPoint = lastDevicePoint(history)
 
-    while(i >= 0) {
+    while (i >= 0) {
         timestampedPoint = history[i]
-        if(lastPoint.timestamp - timestampedPoint.timestamp > toMilliseconds(timeDelta)) break
+        if (
+            lastPoint.timestamp - timestampedPoint.timestamp >
+            toMilliseconds(timeDelta)
+        )
+            break
         i++
     }
 
-    if(!timestampedPoint) return { x: 0, y: 0 }
+    if (!timestampedPoint) return { x: 0, y: 0 }
 
     const time = (lastPoint.timestamp - timestampedPoint.timestamp) / 1000
-    if(time === 0) return { x: 0, y: 0 }
+    if (time === 0) return { x: 0, y: 0 }
 
     const currentVelocity = {
         x: (lastPoint.x - timestampedPoint.x) / time,
-        y: (lastPoint.y - timestampedPoint.y) / time
+        y: (lastPoint.y - timestampedPoint.y) / time,
     }
 
-    if(currentVelocity.x === Infinity) currentVelocity.x = 0
-    if(currentVelocity.y === Infinity) currentVelocity.y = 0
+    if (currentVelocity.x === Infinity) currentVelocity.x = 0
+    if (currentVelocity.y === Infinity) currentVelocity.y = 0
 
     return currentVelocity
 }
