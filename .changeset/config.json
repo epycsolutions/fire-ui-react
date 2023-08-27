@@ -1,0 +1,24 @@
+{
+    "$schema": "https://unpkg.com/@changesets/config@1.4.0/schema.json",
+    "changelog": [
+      "@changesets/changelog-github",
+      { "repo": "epycsolutions/fire-ui-react" }
+    ],
+    "commit": false,
+    "linked": [],
+    "access": "public",
+    "baseBranch": "master",
+    "updateInternalDependencies": "patch",
+    "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+      "onlyUpdatePeerDependentsWhenOutOfRange": true
+    },
+    "ignore": [
+      "create-react-app-ts",
+      "gatsby-starter-default",
+      "chakra-next-app",
+      "chakra-next-pages",
+      "chakra-storybook-addon",
+      "vite-ts"
+    ]
+  }
+  
