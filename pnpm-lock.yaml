@@ -220,6 +220,14 @@ importers:
         specifier: 7.22.5
         version: 7.22.5(@babel/core@7.22.10)
 
+  packages/components/anatomy:
+    devDependencies:
+      clean-package:
+        specifier: 2.2.0
+        version: 2.2.0
+
+  packages/components/theme-tools: {}
+
   packages/legacy/hooks:
     dependencies:
       '@fire-ui/react-utils':
@@ -274,8 +282,27 @@ importers:
         specifier: 2.2.0
         version: 2.2.0
 
+  packages/utilities/breakpoint-utils:
+    dependencies:
+      '@fire-ui/shared-utils':
+        specifier: workspace:*
+        version: link:../shared-utils
+    devDependencies:
+      clean-package:
+        specifier: 2.2.0
+        version: 2.2.0
+
   packages/utilities/shared-utils:
     devDependencies:
+      clean-package:
+        specifier: 2.2.0
+        version: 2.2.0
+
+  packages/utilities/theme-utils:
+    devDependencies:
+      '@types/lodash.mergewith':
+        specifier: 4.6.7
+        version: 4.6.7
       clean-package:
         specifier: 2.2.0
         version: 2.2.0
@@ -5054,11 +5081,9 @@ packages:
     resolution: {integrity: sha512-3m+lkO5CLRRYU0fhGRp7zbsGi6+BZj0uTVSwvcKU+nSlhjA9/QRNfuSGnD2mX6hQA7ZbmcCkzk5h4ZYGOtk14A==}
     dependencies:
       '@types/lodash': 4.14.197
-    dev: false
 
   /@types/lodash@4.14.197:
     resolution: {integrity: sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==}
-    dev: false
 
   /@types/mdx@2.0.6:
     resolution: {integrity: sha512-sVcwEG10aFU2KcM7cIA0M410UPv/DesOPyG8zMVk0QUDexHA3lYmGucpEpZ2dtWWhi2ip3CG+5g/iH0PwoW4Fw==}
