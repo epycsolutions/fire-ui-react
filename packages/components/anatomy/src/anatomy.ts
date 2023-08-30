@@ -4,8 +4,8 @@
  */
 export function anatomy<T extends string = string>(
     name: string,
-    map = {} as Record<T, Part>
-): Anatomy<T>{
+    map = {} as Record<T, Part>,
+): Anatomy<T> {
     let called = false
 
     /**
@@ -13,21 +13,23 @@ export function anatomy<T extends string = string>(
      * It should only be called once.
      */
     function assert() {
-        if(!called) {
+        if (!called) {
             called = true
             return
         }
 
-        throw new Error('[anatomy] .part(...) should only be called once. Did you mean to use .extend(...)?')
+        throw new Error(
+            '[anatomy] .part(...) should only be called once. Did you mean to use .extend(...)?',
+        )
     }
 
     /**
-     * Add the core parts of the components 
+     * Add the core parts of the components
      */
     function parts<V extends string>(...values: V[]) {
         assert()
 
-        for(const part of values) {
+        for (const part of values) {
             ;(map as any)[part] = toPart(part)
         }
 
@@ -38,8 +40,8 @@ export function anatomy<T extends string = string>(
      * Extend the component anatomy to include new parts
      */
     function extend<U extends string>(...parts: U[]) {
-        for(const part of parts) {
-            if(part in map) continue
+        for (const part of parts) {
+            if (part in map) continue
             ;(map as any)[part] = toPart(part)
         }
 
@@ -51,7 +53,10 @@ export function anatomy<T extends string = string>(
      */
     function selectors() {
         const value = Object.fromEntries(
-            Object.entries(map).map(([key, part]) => [key, (part as any).selector])
+            Object.entries(map).map(([key, part]) => [
+                key,
+                (part as any).selector,
+            ]),
         )
 
         return value as Record<T, string>
@@ -62,7 +67,10 @@ export function anatomy<T extends string = string>(
      */
     function classNames() {
         const value = Object.fromEntries(
-            Object.entries(map).map(([key, part]) => [key, (part as any).className]),
+            Object.entries(map).map(([key, part]) => [
+                key,
+                (part as any).className,
+            ]),
         )
 
         return value as Record<T, string>
@@ -81,7 +89,7 @@ export function anatomy<T extends string = string>(
         const partObject = {
             className,
             selector: `.${className}`,
-            toString: () => part
+            toString: () => part,
         }
 
         return partObject as typeof partObject & string
@@ -92,7 +100,6 @@ export function anatomy<T extends string = string>(
      */
     const __type = {} as T
 
-
     return {
         parts,
         toPart,
@@ -102,7 +109,7 @@ export function anatomy<T extends string = string>(
         get keys(): T[] {
             return Object.keys(map) as T[]
         },
-        __type
+        __type,
     }
 }
 
