@@ -1,9 +1,9 @@
-# @fire-ui/shared-utils
+# @fire-ui/breakpoint-utils
 
 > This is an internal utility, not intended for public usage.
 
 ## Installation
 
 ```sh
-npm i @fire-ui/shared-utils
+npm i @fire-ui/breakpoint-utils
 ```
