@@ -1,0 +1,54 @@
+{
+    "name": "@fire-ui/merge-utils",
+    "version": "0.0.0",
+    "description": "",
+    "keywords": [
+        "merge",
+        "object",
+        "function",
+        "fire"
+    ],
+    "author": "Epyc Solutions",
+    "homepage": "https://github.com/epycsolutions/fire-ui-react#readme",
+    "license": "MIT",
+    "main": "src/index.ts",
+    "sideEffects": false,
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/epycsolutions/fire-ui-react.git",
+        "directory": "packages/utilities/merge-utils"
+    },
+    "bugs": {
+        "url": "https://github.com/epycsolutions/fire-ui-react/issues"
+    },
+    "scripts": {
+        "build": "tsup src --dts",
+        "dev": "pnpm build:fast -- --watch",
+        "clean": "rimraf dist .turbo",
+        "typecheck": "tsc --noEmit",
+        "build:fast": "tsup src",
+        "prepack": "clean-package",
+        "postpack": "clean-package restore"
+    },
+    "dependencies": {
+        "merge-anything": "5.1.7"
+    },
+    "devDependencies": {
+        "clean-package": "2.2.0"
+    },
+    "clean-package": "../../../clean-package.config.json",
+    "tsup": {
+        "clean": true,
+        "target": "ES2019",
+        "format": [
+            "cjs",
+            "esm"
+        ]
+    }
+}
