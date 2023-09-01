@@ -23,7 +23,7 @@
         }
     },
     "plugins": [
-        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint/eslint-plugin", 
         "testing-library"
     ],
     "rules": {
@@ -62,14 +62,17 @@
         "no-alert": "off",
         "react/jsx-filename-extension": [
             "error",
-            { "extensions": [ ".js", ".tsx" ] }
+            { "extensions": [".js", ".tsx"] }
         ],
         "react/jsx-props-no-spreading": "off",
         "react/no-array-index-key": "off",
+        "react/require-default-props": "off",
         "react/sort-prop-types": "error",
         "react/prop-types": "off",
         "@typescript-eslint/no-shadow": "off",
-        "prefer-object-speed": "off",
+        "react-hooks/exhaustive-deps": "error",
+        "import/no-named-as-default": "off",
+        "prefer-object-spread": "off",
         "arrow-body-style": "off",
         "react/sort-comp": "off"
     },
@@ -82,9 +85,7 @@
                 "scripts/**/*.ts"
             ],
             "parserOptions": {
-                "project": [
-                    "tsconfig.json"
-                ]
+                "project": ["tsconfig.json"]
             }
         }
     ]
