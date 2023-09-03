@@ -1,0 +1,70 @@
+{
+    "name": "@fire-ui/styled-system",
+    "version": "0.0.0",
+    "description": "Style function for CSS-in-JS building component libraries",
+    "keywords": [
+        "theme",
+        "theming",
+        "style",
+        "system",
+        "styled",
+        "css-in-js",
+        "component",
+        "functions",
+        "parser",
+        "fire",
+        "fire-ui",
+        "fire ui"
+    ],
+    "author": "Epyc Solutions",
+    "homepage": "https://github.com/epycsolutions/fire-ui-react#readme",
+    "license": "MIT",
+    "main": "src/index.ts",
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/epycsolutions/fire-ui-react.git",
+        "directory": "packages/components/styled-system"
+    },
+    "bugs": {
+        "url": "https://github.com/epycsolutions/fire-ui-react/issues"
+    },
+    "dependencies": {
+        "csstype": "3.1.2",
+        "lodash.mergewith": "4.6.2",
+        "@fire-ui/shared-utils": "workspace:*"
+    },
+    "devDependencies": {
+        "@fire-ui/breakpoint-utils": "workspace:*",
+        "@fire-ui/merge-utils": "workspace:*",
+        "@fire-ui/object-utils": "workspace:*",
+        "@emotion/react": "11.11.1",
+        "@emotion/styled": "11.11.0",
+        "@types/lodash.mergewith": "4.6.7",
+        "clean-package": "2.2.0"
+    },
+    "sideEffects": false,
+    "scripts": {
+        "build": "tsup --entry src/index.ts --entry src/theming.types.ts --entry src/shared.types.ts --dts",
+        "dev": "pnpm build:fast -- --watch",
+        "clean": "rimraf dist .turbo",
+        "typecheck": "tsc --noEmit",
+        "build:fast": "tsup src",
+        "prepack": "clean-package",
+        "postpack": "clean-package restore"
+    },
+    "clean-packages": "../../../clean-package.config.json",
+    "tsup": {
+        "clean": true,
+        "target": "ES2019",
+        "format": [
+            "cjs",
+            "esm"
+        ]
+    }
+}
