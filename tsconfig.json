@@ -20,7 +20,7 @@
         "@types",
         "packages",
         "scripts",
-        "tooling",
+        "apps",
         "plopfile.ts"
     ],
     "exclude": [
