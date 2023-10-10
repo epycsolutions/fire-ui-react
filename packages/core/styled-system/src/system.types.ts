@@ -23,8 +23,8 @@ import type {
 import { Pseudos } from './pseudos'
 import { ResponsiveValue } from './utils/types'
 
-export interface StyleProps
-    extends SpaceProps,
+export interface StyleProps extends
+        SpaceProps,
         ColorProps,
         TransitionProps,
         TypographyProps,

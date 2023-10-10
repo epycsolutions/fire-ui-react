@@ -18,7 +18,7 @@ export type Token<
     ThemeKey = unknown
 > = ThemeKey extends keyof ThemeTypings
     ? ResponsiveValue<CSSType | ThemeTypings[ThemeKey]>
-    : ResponsiveArray<CSSType>
+    : ResponsiveValue<CSSType>
 
 export type CSSMap = Record<
     string,
