@@ -260,6 +260,37 @@ importers:
         specifier: 2.2.0
         version: 2.2.0
 
+  packages/hooks/context:
+    devDependencies:
+      clean-package:
+        specifier: 2.2.0
+        version: 2.2.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+
+  packages/hooks/use-callback-ref:
+    devDependencies:
+      clean-package:
+        specifier: 2.2.0
+        version: 2.2.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+
+  packages/hooks/use-controllable-state:
+    dependencies:
+      '@fire-ui/react-use-callback-ref':
+        specifier: workspace:*
+        version: link:../use-callback-ref
+    devDependencies:
+      clean-package:
+        specifier: 2.2.0
+        version: 2.2.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+
   packages/legacy/hooks:
     dependencies:
       '@fire-ui/react-utils':
@@ -319,6 +350,16 @@ importers:
       '@fire-ui/shared-utils':
         specifier: workspace:*
         version: link:../shared-utils
+    devDependencies:
+      clean-package:
+        specifier: 2.2.0
+        version: 2.2.0
+
+  packages/utilities/dom-utils:
+    dependencies:
+      merge-anything:
+        specifier: 5.1.7
+        version: 5.1.7
     devDependencies:
       clean-package:
         specifier: 2.2.0
