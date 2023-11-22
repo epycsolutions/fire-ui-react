@@ -1,0 +1,49 @@
+{
+    "name": "@fire-ui/react-use-pan-event",
+    "version": "0.1.0",
+    "description": "React hook to track pan events",
+    "keywords": [
+        "react-use-pan-event"
+    ],
+    "author": "Epyc Solutions",
+    "homepage": "Epyc Solutions",
+    "license": "MIT",
+    "sideEffects": false,
+    "main": "src/index.ts",
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/epycsolutions/fire-ui-react.git",
+        "directory": "packages/hooks/use-pan-event"
+    },
+    "bugs": {
+        "url": "https://github.com/epycsolutions/fire-ui-react/issues"
+    },
+    "scripts": {
+        "build": "tsup src --dts",
+        "dev": "pnpm build:fast -- --watch",
+        "clean": "rimraf dist .turbo",
+        "typecheck": "tsc --noEmit",
+        "build:fast": "tsup src",
+        "prepack": "clean-package",
+        "postpack": "clean-package restore"
+    },
+    "dependencies": {
+        "framesync": "6.1.2",
+        "@fire-ui/event-utils": "workspace:*",
+        "@fire-ui/react-use-latest-ref": "workspace:*"
+    },
+    "peerDependencies": {
+        "react": ">=18"
+    },
+    "devDependencies": {
+        "react": "^18.2.0",
+        "clean-package": "2.2.0"
+    },
+    "clean-package": "../../../clean-package.config.json"
+}
