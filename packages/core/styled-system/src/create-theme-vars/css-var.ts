@@ -41,7 +41,7 @@ export function cssVar(name: string, fallback?: string, cssVarPrefix?: string) {
 
 type VarDefinition = ReturnType<typeof cssVar>
 
-export function defineCCCVars<K extends string>(
+export function defineCSSVars<K extends string>(
     scope: string,
     keys: Array<K | [K, string]>
 ): Record<K, VarDefinition> {
