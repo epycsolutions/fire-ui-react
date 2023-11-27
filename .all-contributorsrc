@@ -1,0 +1,28 @@
+{
+    "projectName": "fire-ui",
+    "projectOwner": "Epyc Solutions",
+    "repoType": "github",
+    "repoHost": "https://github.com",
+    "files": [
+        "README.md"
+    ],
+    "imageSize": 64,
+    "commit": true,
+    "commitConvention": "angular",
+    "contributors": [
+        {
+            "login": "einswurmi",
+            "name": "David Stüwe",
+            "avatar_url": "https://avatars.githubusercontent.com/u/49815205?v=4",
+            "profile": "https://github.com/EinsWurmi",
+            "contributions": [
+                "code",
+                "maintenance",
+                "doc",
+                "example",
+                "projectManagement",
+                "design"
+            ]
+        }
+    ]
+}
