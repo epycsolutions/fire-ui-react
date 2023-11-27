@@ -1,0 +1,59 @@
+{
+    "name": "@fire-ui/color-mode",
+    "version": "0.1.0",
+    "description": "React component and hooks for handling light and dark mode.",
+    "keywords": [
+        "react",
+        "theming",
+        "ui",
+        "light mode",
+        "use dark mode",
+        "dark mode",
+        "color mode",
+        "hook",
+        "color scheme",
+        "media query",
+        "fire ui"
+    ],
+    "author": "Epyc Solutions",
+    "homepage": "https://github.com/epycsolutions/fire-ui-react",
+    "license": "MIT",
+    "main": "src/index.ts",
+    "sideEffects": false,
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/epycsolutions/fire-ui-react.git",
+        "directory": "packages/components/color-mode"
+    },
+    "bugs": {
+        "url": "https://github.com/epycsolutions/fire-ui-react/issues"
+    },
+    "scripts": {
+        "build": "tsup src --dts",
+        "dev": "pnpm build:fast -- --watch",
+        "clean": "rimraf dist .turbo",
+        "typecheck": "tsc --noEmit",
+        "build:fast": "tsup src",
+        "prepack": "clean-package",
+        "postpack": "clean-package restore",
+        "typedocs": "tsx ../../../scripts/generate-type-docs.ts"
+    },
+    "dependencies": {
+        "@fire-ui/react-use-safe-layout-effect": "workspace:*"
+    },
+    "peerDependencies": {
+        "react": ">=18"
+    },
+    "devDependencies": {
+        "@fire-ui/utils": "workspace:*",
+        "react": "18.2.0",
+        "clean-package": "2.2.0"
+    },
+    "clean-package": "../../../clean-package.config.json"
+}
