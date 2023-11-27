@@ -1,0 +1,57 @@
+{
+    "name": "@fire-ui/cli",
+    "version": "0.1.0",
+    "description": "Generate theme typings for autocomplete",
+    "keywords": [
+        "theme",
+        "theming",
+        "typings",
+        "generator",
+        "fire ui",
+        "ui mode",
+        "ui"
+    ],
+    "sideEffects": false,
+    "author": "Epyc Solutions",
+    "homepage": "https://github.com/epycsolutions/fire-ui-react#readme",
+    "license": "MIT",
+    "main": "src/index.ts",
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/epycsolutions/fire-ui-react.git",
+        "directory": "tooling/cli"
+    },
+    "bugs": {
+        "url": "https://github.com/epycsolutions/fire-ui-react/issues"
+    },
+    "bin": {
+        "fire-ui": "bin/index.js"
+    },
+    "scripts": {
+        "clean": "rimraf dist .turbo",
+        "build": "tsup src --format cjs --clean --shims",
+        "dev": "pnpm build --watch",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "bundle-n-require": "1.0.1",
+        "chokidar": "3.5.3",
+        "cli-check-node": "1.3.4",
+        "cli-handle-unhandled": "1.1.1",
+        "cli-welcome": "2.2.2",
+        "commander": "11.1.0",
+        "prettier": "3.1.0"
+    },
+    "devDependencies": {
+        "@types/ora": "3.2.0",
+        "@types/update-notifier": "6.0.8",
+        "ora": "7.0.1",
+        "update-notifier": "7.0.0"
+    }
+}
