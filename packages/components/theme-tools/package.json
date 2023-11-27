@@ -1,0 +1,62 @@
+{
+    "name": "@fire-ui/theme-tools",
+    "version": "0.1.0",
+    "description": "FireUI system primitives",
+    "keywords": [
+        "theme",
+        "theming",
+        "color",
+        "utilities"
+    ],
+    "sideEffects": false,
+    "author": "Epyc Solutions",
+    "homepage": "https://github.com/epycsolutions/fire-ui-react#readme",
+    "license": "MIT",
+    "main": "src/index.ts",
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/epycsolutions/fire-ui-react.git",
+        "directory": "packages/components/theme-tools"
+    },
+    "bugs": {
+        "url": "https://github.com/epycsolutions/fire-ui-react/issues"
+    },
+    "dependencies": {
+        "@fire-ui/anatomy": "workspace:*",
+        "color2k": "^2.0.2",
+        "@fire-ui/shared-utils": "workspace:*"
+    },
+    "peerDependencies": {
+        "@fire-ui/styled-system": "workspace:*"
+    },
+    "devDependencies": {
+        "@fire-ui/styled-system": "workspace:*",
+        "@types/dlv": "^1.1.2",
+        "clean-package": "2.2.0",
+        "dlv": "^1.1.3"
+    },
+    "scripts": {
+        "build": "tsup src --dts",
+        "dev": "pnpm build:fast -- --watch",
+        "clean": "rimraf dist .turbo",
+        "typecheck": "tsc --noEmit",
+        "build:fast": "tsup src",
+        "prepack": "clean-package",
+        "postpack": "clean-package restore"
+    },
+    "clean-package": "../../../clean-package.config.json",
+    "tsup": {
+        "format": [
+            "cjs",
+            "esm"
+        ],
+        "target": "es2019",
+        "sourcemap": true
+    }
+}
