@@ -79,10 +79,10 @@ export const memoize = (fn: Get) => {
     return memoizedFn
 }
 
-export const memoizeGet = memoize(get)
+export const memoizedGet = memoize(get)
 
 export function getWithDefault(path: any, scale: any) {
-    return memoizeGet(scale, path, path)
+    return memoizedGet(scale, path, path)
 }
 
 type FilterFn<T> = (value: any, key: string, object: T) => boolean
