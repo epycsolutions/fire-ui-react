@@ -1,0 +1,57 @@
+{
+    "name": "@fire-ui/theme-utils",
+    "version": "0.1.0",
+    "description": "",
+    "keywords": [
+        "theme",
+        "utilities",
+        "fire"
+    ],
+    "author": "Epyc Solutions",
+    "homepage": "https://github.com/epycsolutions/fire-ui-react#readme",
+    "license": "MIT",
+    "main": "src/index.ts",
+    "sideEffects": false,
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/epycsolutions/fire-ui-react.git",
+        "directory": "packages/utilities/theme-utils"
+    },
+    "bugs": {
+        "url": "https://github.com/epycsolutions/fire-ui-react/issues"
+    },
+    "scripts": {
+        "build": "tsup src --dts",
+        "dev": "pnpm build:fast -- --watch",
+        "clean": "rimraf dist .turbo",
+        "typecheck": "tsc --noEmit",
+        "build:fast": "tsup src",
+        "prepack": "clean-package",
+        "postpack": "clean-package restore"
+    },
+    "devDependencies": {
+        "@types/lodash.mergewith": "4.6.9",
+        "clean-package": "2.2.0"
+    },
+    "dependencies": {
+        "@fire-ui/styled-system": "workspace:*",
+        "@fire-ui/theme": "workspace:*",
+        "lodash.mergewith": "4.6.2",
+        "@fire-ui/shared-utils": "workspace:*"
+    },
+    "clean-package": "../../../clean-package.config.json",
+    "tsup": {
+        "clean": true,
+        "target": "ES2019",
+        "format": [
+            "cjs",
+            "esm"
+        ]
+    }
+}
