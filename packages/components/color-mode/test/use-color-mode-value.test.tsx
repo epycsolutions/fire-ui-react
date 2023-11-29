@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { render, screen } from '@fire-ui/test-utils'
 
 import { ColorModeProvider, useColorModeValue, useColorMode } from '../src'

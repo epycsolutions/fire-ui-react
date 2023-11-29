@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { render } from '@fire-ui/test-utils'
 
 import { ColorModeProvider, cookieStorageManager } from '../src'
